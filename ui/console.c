@@ -1649,7 +1649,7 @@ void dpy_gfx_update_full(QemuConsole *con)
 void dpy_gfx_replace_surface(QemuConsole *con,
                              DisplaySurface *surface)
 {
-    static const char placeholder_msg[] = "Display output is not active.";
+    static const char placeholder_msg[] = "";
     DisplayState *s = con->ds;
     DisplaySurface *old_surface = con->surface;
     DisplayChangeListener *dcl;
@@ -2026,7 +2026,7 @@ QemuConsole *graphic_console_init(DeviceState *dev, uint32_t head,
                                   void *opaque)
 {
     static const char noinit[] =
-        "Guest has not initialized the display (yet).";
+        "";
     int width = 640;
     int height = 480;
     QemuConsole *s;

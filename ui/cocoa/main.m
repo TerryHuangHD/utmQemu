@@ -135,17 +135,17 @@ static void create_initial_menus(void)
 
     // Application menu
     menu = [[NSMenu alloc] initWithTitle:@""];
-    [menu addItemWithTitle:@"About QEMU" action:@selector(do_about_menu_item:) keyEquivalent:@""]; // About QEMU
-    [menu addItem:[NSMenuItem separatorItem]]; //Separator
+    // [menu addItemWithTitle:@"About QEMU" action:@selector(do_about_menu_item:) keyEquivalent:@""]; // About QEMU
+    // [menu addItem:[NSMenuItem separatorItem]]; //Separator
     menuItem = [menu addItemWithTitle:@"Services" action:nil keyEquivalent:@""];
     [menuItem setSubmenu:[NSApp servicesMenu]];
     [menu addItem:[NSMenuItem separatorItem]];
-    [menu addItemWithTitle:@"Hide QEMU" action:@selector(hide:) keyEquivalent:@"h"]; //Hide QEMU
+    [menu addItemWithTitle:@"Hide Windows" action:@selector(hide:) keyEquivalent:@"h"]; //Hide QEMU
     menuItem = (NSMenuItem *)[menu addItemWithTitle:@"Hide Others" action:@selector(hideOtherApplications:) keyEquivalent:@"h"]; // Hide Others
     [menuItem setKeyEquivalentModifierMask:(NSEventModifierFlagOption|NSEventModifierFlagCommand)];
     [menu addItemWithTitle:@"Show All" action:@selector(unhideAllApplications:) keyEquivalent:@""]; // Show All
     [menu addItem:[NSMenuItem separatorItem]]; //Separator
-    [menu addItemWithTitle:@"Quit QEMU" action:@selector(terminate:) keyEquivalent:@"q"];
+    [menu addItemWithTitle:@"Quit Windows" action:@selector(terminate:) keyEquivalent:@"q"];
     menuItem = [[NSMenuItem alloc] initWithTitle:@"Apple" action:nil keyEquivalent:@""];
     [menuItem setSubmenu:menu];
     [[NSApp mainMenu] addItem:menuItem];
@@ -163,7 +163,7 @@ static void create_initial_menus(void)
     [menu addItem: [[[NSMenuItem alloc] initWithTitle: @"Power Down" action: @selector(powerDownQEMU:) keyEquivalent: @""] autorelease]];
     menuItem = [[[NSMenuItem alloc] initWithTitle: @"Machine" action:nil keyEquivalent:@""] autorelease];
     [menuItem setSubmenu:menu];
-    [[NSApp mainMenu] addItem:menuItem];
+    // [[NSApp mainMenu] addItem:menuItem];
 
     // View menu
     menu = [[NSMenu alloc] initWithTitle:@"View"];
@@ -171,7 +171,7 @@ static void create_initial_menus(void)
     [menu addItem: [[[NSMenuItem alloc] initWithTitle:@"Zoom To Fit" action:@selector(zoomToFit:) keyEquivalent:@""] autorelease]];
     menuItem = [[[NSMenuItem alloc] initWithTitle:@"View" action:nil keyEquivalent:@""] autorelease];
     [menuItem setSubmenu:menu];
-    [[NSApp mainMenu] addItem:menuItem];
+    // [[NSApp mainMenu] addItem:menuItem];
 
     // Speed menu
     menu = [[NSMenu alloc] initWithTitle:@"Speed"];
@@ -197,7 +197,7 @@ static void create_initial_menus(void)
     }
     menuItem = [[[NSMenuItem alloc] initWithTitle:@"Speed" action:nil keyEquivalent:@""] autorelease];
     [menuItem setSubmenu:menu];
-    [[NSApp mainMenu] addItem:menuItem];
+    // [[NSApp mainMenu] addItem:menuItem];
 
     // Window menu
     menu = [[NSMenu alloc] initWithTitle:@"Window"];
@@ -205,14 +205,14 @@ static void create_initial_menus(void)
     menuItem = [[[NSMenuItem alloc] initWithTitle:@"Window" action:nil keyEquivalent:@""] autorelease];
     [menuItem setSubmenu:menu];
     [[NSApp mainMenu] addItem:menuItem];
-    [NSApp setWindowsMenu:menu];
+    // [NSApp setWindowsMenu:menu];
 
     // Help menu
     menu = [[NSMenu alloc] initWithTitle:@"Help"];
     [menu addItem: [[[NSMenuItem alloc] initWithTitle:@"QEMU Documentation" action:@selector(showQEMUDoc:) keyEquivalent:@"?"] autorelease]]; // QEMU Help
     menuItem = [[[NSMenuItem alloc] initWithTitle:@"Window" action:nil keyEquivalent:@""] autorelease];
     [menuItem setSubmenu:menu];
-    [[NSApp mainMenu] addItem:menuItem];
+    // [[NSApp mainMenu] addItem:menuItem];
 }
 
 /* Returns a name for a given console */

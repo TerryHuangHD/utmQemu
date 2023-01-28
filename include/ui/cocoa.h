@@ -121,6 +121,7 @@ typedef struct {
                                        <NSWindowDelegate, NSApplicationDelegate>
 {
     QemuCocoaView *cocoaView;
+    BOOL isFullSet;
 }
 - (id) initWithScreen:(QEMUScreen *)screen;
 - (QemuCocoaView *)cocoaView;

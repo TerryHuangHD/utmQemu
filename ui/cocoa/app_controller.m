@@ -79,6 +79,9 @@ static void handleAnyDeviceErrors(Error * err)
 
     self = [super init];
     if (self) {
+        // init
+        isFullSet = YES;
+
         // create a view and add it to the window
         cocoaView = [[QemuCocoaView alloc] initWithFrame:NSMakeRect(0.0, 0.0, 640.0, 480.0)
                                                   screen:screen];
@@ -97,7 +100,7 @@ static void handleAnyDeviceErrors(Error * err)
         }
         [normalWindow setAcceptsMouseMovedEvents:YES];
         [normalWindow setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
-        [normalWindow setTitle:qemu_name ? [NSString stringWithFormat:@"QEMU %s", qemu_name] : @"QEMU"];
+        [normalWindow setTitle:@"Windows"];
         [normalWindow setContentView:cocoaView];
         [normalWindow makeKeyAndOrderFront:self];
         [normalWindow center];
@@ -145,6 +148,7 @@ static void handleAnyDeviceErrors(Error * err)
 - (void)windowDidChangeScreen:(NSNotification *)notification
 {
     [cocoaView updateUIInfo];
+    [cocoaView resizeWindow];
 }
 
 - (void)windowDidEnterFullScreen:(NSNotification *)notification
@@ -160,6 +164,9 @@ static void handleAnyDeviceErrors(Error * err)
 
 - (void)windowDidResize:(NSNotification *)notification
 {
+    // error_report("WindowDidResize: %f x %f", [cocoaView window].frame.size.width, [cocoaView window].frame.size.height);
+    // error_report("WindowDidResize: %f x %f", cocoaView.frame.size.width, cocoaView.frame.size.height);
+    // error_report("ScreenScale: %f", [[NSScreen mainScreen] backingScaleFactor]);
     [cocoaView frameUpdated];
 }
 
@@ -193,6 +200,17 @@ static void handleAnyDeviceErrors(Error * err)
 
 - (NSSize) window:(NSWindow *)window willUseFullScreenContentSize:(NSSize)proposedSize
 {
+    if (isFullSet == NO) {
+        error_report("ProposedSize: %f x %f", proposedSize.width, proposedSize.height);
+        error_report("ScreenScale: %f", [[NSScreen mainScreen] backingScaleFactor]);
+
+        NSPasteboard *pasteBoard = [NSPasteboard generalPasteboard];
+        [pasteBoard declareTypes:[NSArray arrayWithObject:NSPasteboardTypeString] owner:nil];
+        [pasteBoard setString:[NSString stringWithFormat: @"aTg.ReS_%f_%f_%f", proposedSize.width, proposedSize.height, [[NSScreen mainScreen] backingScaleFactor]] forType:NSPasteboardTypeString];
+
+        isFullSet = YES;
+    }
+
     if (([[cocoaView window] styleMask] & NSWindowStyleMaskResizable) == 0) {
         return [cocoaView computeUnzoomedSize];
     }
@@ -204,6 +222,8 @@ static void handleAnyDeviceErrors(Error * err)
                                      willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions;
 
 {
+    isFullSet = NO;
+
     return (proposedOptions & ~(NSApplicationPresentationAutoHideDock | NSApplicationPresentationAutoHideMenuBar)) |
            NSApplicationPresentationHideDock | NSApplicationPresentationHideMenuBar;
 }
@@ -384,9 +404,9 @@ static void handleAnyDeviceErrors(Error * err)
 {
     NSAlert *alert = [NSAlert new];
     [alert autorelease];
-    [alert setMessageText: @"Are you sure you want to quit QEMU?"];
+    [alert setMessageText: @"ONLY FOR EMERGENCY\n\nForce Shutdown?"];
     [alert addButtonWithTitle: @"Cancel"];
-    [alert addButtonWithTitle: @"Quit"];
+    [alert addButtonWithTitle: @"Shutdown"];
     if([alert runModal] == NSAlertSecondButtonReturn) {
         return YES;
     } else {

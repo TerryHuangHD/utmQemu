@@ -891,9 +891,9 @@ static CGEventRef handleTapEvent(CGEventTapProxy proxy, CGEventType type, CGEven
     }
 
     if (qemu_name)
-        [[self window] setTitle:[NSString stringWithFormat:@"QEMU %s - (Press ctrl + alt + g to release Mouse)", qemu_name]];
+        [[self window] setTitle:@"Windows"];
     else
-        [[self window] setTitle:@"QEMU - (Press ctrl + alt + g to release Mouse)"];
+        [[self window] setTitle:@"Windows"];
     [self hideCursor];
     CGAssociateMouseAndMouseCursorPosition(isAbsoluteEnabled);
     isMouseGrabbed = TRUE; // while isMouseGrabbed = TRUE, QemuCocoaApp sends all events to [cocoaView handleEvent:]
@@ -911,9 +911,9 @@ static CGEventRef handleTapEvent(CGEventTapProxy proxy, CGEventType type, CGEven
     COCOA_DEBUG("QemuCocoaView: ungrabMouseLocked\n");
 
     if (qemu_name)
-        [[self window] setTitle:[NSString stringWithFormat:@"QEMU %s", qemu_name]];
+        [[self window] setTitle:@"Windows"];
     else
-        [[self window] setTitle:@"QEMU"];
+        [[self window] setTitle:@"Windows"];
     [self unhideCursor];
     CGAssociateMouseAndMouseCursorPosition(TRUE);
     isMouseGrabbed = FALSE;
