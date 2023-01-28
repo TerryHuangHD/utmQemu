@@ -28,7 +28,7 @@
 
 #include <crt_externs.h>
 
-#include "qemu-common.h"
+// #include "qemu-common.h"
 #include "ui/cocoa.h"
 #include "ui/input.h"
 #include "sysemu/sysemu.h"
@@ -386,19 +386,20 @@ static void cocoa_clipboard_request(QemuClipboardInfo *info,
     }
 }
 
-int main(int argc, char **argv, char **envp)
+// int main(int argc, char **argv, char **envp)
+static int cocoa_main()
 {
     QemuThread main_thread;
 
     COCOA_DEBUG("Entered main()\n");
 
     /* Takes iothread lock.  */
-    qemu_init(argc, argv, envp);
-    if (!have_cocoa_ui) {
-         qemu_main_loop();
-         qemu_cleanup();
-         return 0;
-    }
+    // qemu_init(argc, argv, envp);
+    // if (!have_cocoa_ui) {
+    //      qemu_main_loop();
+    //      qemu_cleanup();
+    //      return 0;
+    // }
 
     qemu_mutex_unlock_iothread();
     qemu_thread_create(&main_thread, "qemu_main_loop", call_qemu_main_loop,
@@ -412,6 +413,23 @@ int main(int argc, char **argv, char **envp)
     return 0;
 }
 
+// static int cocoa_main()
+// {
+//     QemuThread thread;
+
+//     COCOA_DEBUG("Entered %s()\n", __func__);
+
+//     qemu_mutex_unlock_iothread();
+//     qemu_thread_create(&thread, "qemu_main", call_qemu_main,
+//                        NULL, QEMU_THREAD_DETACHED);
+
+//     // Start the main event loop
+//     COCOA_DEBUG("Main thread: entering OSX run loop\n");
+//     [NSApp run];
+//     COCOA_DEBUG("Main thread: left OSX run loop, which should never happen\n");
+
+//     abort();
+// }
 
 
 #pragma mark qemu
@@ -978,7 +996,6 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
             if (!egl_surface) {
                 exit(1);
             }
-#endif
         } else {
             NSOpenGLPixelFormat *format = cocoa_gl_create_ns_pixel_format(32);
             NSOpenGLView *view = [[NSOpenGLView alloc] initWithFrame:[cocoaView frame]

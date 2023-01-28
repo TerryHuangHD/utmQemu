@@ -24,7 +24,7 @@
 
 #include "qemu/osdep.h"
 
-#include "qemu-common.h"
+// #include "qemu-common.h"
 #include "ui/cocoa.h"
 #include "sysemu/sysemu.h"
 #include "sysemu/runstate.h"
@@ -332,8 +332,8 @@ static void handleAnyDeviceErrors(Error * err)
 
     Error *err = NULL;
     qemu_mutex_lock_iothread();
-    qmp_eject([drive cStringUsingEncoding: NSASCIIStringEncoding],
-              NULL, false, false, &err);
+    qmp_eject(true, [drive cStringUsingEncoding: NSASCIIStringEncoding],
+        false, NULL, false, false, &err);
     qemu_mutex_unlock_iothread();
     handleAnyDeviceErrors(err);
 }
@@ -367,13 +367,16 @@ static void handleAnyDeviceErrors(Error * err)
 
         Error *err = NULL;
         qemu_mutex_lock_iothread();
-        qmp_blockdev_change_medium([drive cStringUsingEncoding:NSASCIIStringEncoding],
-                                   NULL,
-                                   [file cStringUsingEncoding:NSASCIIStringEncoding],
-                                   "raw",
-                                   true, false,
-                                   false, 0,
-                                   &err);
+        qmp_blockdev_change_medium(true,
+                                       [drive cStringUsingEncoding:
+                                                  NSASCIIStringEncoding],
+                                       false, NULL,
+                                       [file cStringUsingEncoding:
+                                                 NSASCIIStringEncoding],
+                                       true, "raw",
+                                       true, false,
+                                       false, 0,
+                                       &err);
         qemu_mutex_unlock_iothread();
         handleAnyDeviceErrors(err);
     }
@@ -403,7 +406,7 @@ static void handleAnyDeviceErrors(Error * err)
     g_free(icon_path_c);
     NSImage *icon = [[NSImage alloc] initWithContentsOfFile:icon_path];
     NSString *version = @"QEMU emulator version " QEMU_FULL_VERSION;
-    NSString *copyright = @QEMU_COPYRIGHT;
+    NSString *copyright = @"QEMU_COPYRIGHT";
     NSDictionary *options;
     if (icon) {
         options = @{

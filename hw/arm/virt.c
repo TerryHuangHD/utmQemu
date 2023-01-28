@@ -1611,13 +1611,13 @@ static void virt_build_smbios(VirtMachineState *vms)
     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
     uint8_t *smbios_tables, *smbios_anchor;
     size_t smbios_tables_len, smbios_anchor_len;
-    const char *product = "QEMU Virtual Machine";
+    const char *product = "Macintosh";
 
     if (kvm_enabled()) {
         product = "KVM Virtual Machine";
     }
 
-    smbios_set_defaults("QEMU", product,
+    smbios_set_defaults("Apple", product,
                         vmc->smbios_old_sys_ver ? "1.0" : mc->name, false,
                         true, SMBIOS_ENTRY_POINT_TYPE_64);
 

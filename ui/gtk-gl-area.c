@@ -121,12 +121,7 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
 {
     VirtualConsole *vc = container_of(dcl, VirtualConsole, gfx.dcl);
 
-<<<<<<< HEAD
-    gd_update_monitor_refresh_rate(
-            vc, vc->window ? vc->window : vc->gfx.drawing_area);
-=======
     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
->>>>>>> v7.1.0
 
     if (!vc->gfx.gls) {
         if (!gtk_widget_get_realized(vc->gfx.drawing_area)) {

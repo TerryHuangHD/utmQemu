@@ -11,9 +11,9 @@
  * device configuration.
  */
 
-#include <linux/vhost_types.h>
-#include <linux/types.h>
-#include <linux/ioctl.h>
+#include "vhost_types.h"
+// #include <linux/types.h>
+// #include <linux/ioctl.h>
 
 #define VHOST_FILE_UNBIND -1
 
